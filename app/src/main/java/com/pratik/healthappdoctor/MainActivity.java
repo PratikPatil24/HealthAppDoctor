@@ -1,13 +1,13 @@
 package com.pratik.healthappdoctor;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -110,10 +110,14 @@ public class MainActivity extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
                                 Log.d("UserFetch", "DocumentSnapshot data: " + document.getData());
-                                Toast.makeText(MainActivity.this, "User Found!", Toast.LENGTH_SHORT).show();
-                                //Getting OTP
-                                Toast.makeText(MainActivity.this, "Getting OTP...", Toast.LENGTH_SHORT).show();
-                                sendVerificationCode(phoneno);
+                                if (document.get("userType").toString().equals("doctor")) {
+                                    Toast.makeText(MainActivity.this, "User Found!", Toast.LENGTH_SHORT).show();
+                                    //Getting OTP
+                                    Toast.makeText(MainActivity.this, "Getting OTP...", Toast.LENGTH_SHORT).show();
+                                    sendVerificationCode(phoneno);
+                                } else {
+                                    Toast.makeText(MainActivity.this, "User Not a Doctor!", Toast.LENGTH_SHORT).show();
+                                }
                             } else {
                                 Log.d("UserFetch", "No such document");
                                 Toast.makeText(MainActivity.this, "User Not Found!", Toast.LENGTH_SHORT).show();
