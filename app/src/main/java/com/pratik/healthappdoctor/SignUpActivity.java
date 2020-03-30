@@ -124,7 +124,7 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 
-                DocumentReference docRef = db.collection("users").document(phoneno);
+                DocumentReference docRef = db.collection("users").document(phoneno + "d");
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -136,10 +136,33 @@ public class SignUpActivity extends AppCompatActivity {
 
                             } else {
                                 Log.d("UserFetch", "No such document");
-                                Toast.makeText(SignUpActivity.this, "User Not Found!", Toast.LENGTH_SHORT).show();
-                                //Getting OTP
-                                Toast.makeText(SignUpActivity.this, "Getting OTP...", Toast.LENGTH_SHORT).show();
-                                sendVerificationCode(phoneno);
+
+                                //Checking If Not Chemist
+                                DocumentReference docRef = db.collection("users").document(phoneno + "c");
+                                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+                                                Log.d("UserFetch", "DocumentSnapshot data: " + document.getData());
+                                                Toast.makeText(SignUpActivity.this, "Chemist User Found! Cannot Sign Up as Doctor", Toast.LENGTH_SHORT).show();
+
+                                            } else {
+                                                Log.d("UserFetch", "No such document");
+                                                Toast.makeText(SignUpActivity.this, "User Not Found!", Toast.LENGTH_SHORT).show();
+                                                //Getting OTP
+                                                Toast.makeText(SignUpActivity.this, "Getting OTP...", Toast.LENGTH_SHORT).show();
+                                                sendVerificationCode(phoneno);
+                                            }
+                                        } else {
+                                            Log.d("UserFetch", "get failed with ", task.getException());
+                                            Toast.makeText(SignUpActivity.this, "Fetch Failed!", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    }
+                                });
+
                             }
                         } else {
                             Log.d("UserFetch", "get failed with ", task.getException());
@@ -275,7 +298,7 @@ public class SignUpActivity extends AppCompatActivity {
         user.put("area", AreaTextInput.getText().toString().toLowerCase());
         user.put("addressline", AddressLineTextInput.getText().toString().toLowerCase());
 
-        db.collection("users").document(phoneno)
+        db.collection("users").document(phoneno + "d")
                 .set(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

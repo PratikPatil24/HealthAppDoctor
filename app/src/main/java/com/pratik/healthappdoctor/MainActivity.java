@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                DocumentReference docRef = db.collection("users").document(phoneno);
+                DocumentReference docRef = db.collection("users").document(phoneno + "d");
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -110,14 +110,9 @@ public class MainActivity extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
                                 Log.d("UserFetch", "DocumentSnapshot data: " + document.getData());
-                                if (document.get("userType").toString().equals("doctor")) {
                                     Toast.makeText(MainActivity.this, "User Found!", Toast.LENGTH_SHORT).show();
                                     //Getting OTP
                                     Toast.makeText(MainActivity.this, "Getting OTP...", Toast.LENGTH_SHORT).show();
-                                    sendVerificationCode(phoneno);
-                                } else {
-                                    Toast.makeText(MainActivity.this, "User Not a Doctor!", Toast.LENGTH_SHORT).show();
-                                }
                             } else {
                                 Log.d("UserFetch", "No such document");
                                 Toast.makeText(MainActivity.this, "User Not Found!", Toast.LENGTH_SHORT).show();
