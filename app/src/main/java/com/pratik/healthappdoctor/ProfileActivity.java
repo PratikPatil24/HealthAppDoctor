@@ -136,14 +136,15 @@ public class ProfileActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d("UserAdd", "DocumentSnapshot successfully written!");
-                                Toast.makeText(ProfileActivity.this, "User Added!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, "Information Updated!", Toast.LENGTH_SHORT).show();
+                                finish();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Log.w("UserAdd", "Error writing document", e);
-                                Toast.makeText(ProfileActivity.this, "User Not Added!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, "Information Not Updated!", Toast.LENGTH_SHORT).show();
                             }
                         });
             }
