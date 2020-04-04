@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 phoneno = "+91" + PhoneNumberTextInput.getText().toString().trim();
 
                 //Validating Phone Number
-                if(phoneno.equals(null) || phoneno.length() != 10){
+                if (phoneno.equals(null) || phoneno.length() != 13) {
                     PhoneNumberTextInput.setError("Enter Valid Phone Number!");
                     PhoneNumberTextInput.requestFocus();
                     return;
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber,        // Phone number to verify
-                60,                 // Timeout duration
+                30,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,               // Activity (for callback binding)
                 mCallbacks,         // OnVerificationStateChangedCallbacks
@@ -219,5 +219,15 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getBaseContext(), DashActivity.class));
+            finish();
+        }
     }
 }

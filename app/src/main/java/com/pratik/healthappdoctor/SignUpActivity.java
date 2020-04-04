@@ -290,8 +290,8 @@ public class SignUpActivity extends AppCompatActivity {
         user.put("userType", "doctor");
         user.put("name", NameTextInput.getText().toString());
         user.put("age", Integer.parseInt(AgeTextInput.getText().toString()));
-        user.put("speciality", SpecialityTextInput.getText().toString());
-        user.put("degree", DegreeTextInput.getText().toString());
+        user.put("speciality", SpecialityTextInput.getText().toString().toLowerCase());
+        user.put("degree", DegreeTextInput.getText().toString().toLowerCase());
         user.put("gender", gender);
         user.put("state", StateTextInput.getText().toString().toLowerCase());
         user.put("city", CityTextInput.getText().toString().toLowerCase());
