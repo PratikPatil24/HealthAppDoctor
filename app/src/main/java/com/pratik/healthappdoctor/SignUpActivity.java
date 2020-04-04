@@ -245,6 +245,7 @@ public class SignUpActivity extends AppCompatActivity {
         Toast.makeText(this, "Credential: " + credential.toString(), Toast.LENGTH_SHORT).show();
         //adding user
         addUser();
+        addtodoctors();
 
         //signing the user
         signInWithPhoneAuthCredential(credential);
@@ -299,6 +300,52 @@ public class SignUpActivity extends AppCompatActivity {
         user.put("addressline", AddressLineTextInput.getText().toString().toLowerCase());
 
         db.collection("users").document(phoneno + "d")
+                .set(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("UserAdd", "DocumentSnapshot successfully written!");
+                        Toast.makeText(SignUpActivity.this, "User Added!", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("UserAdd", "Error writing document", e);
+                        Toast.makeText(SignUpActivity.this, "User Not Added!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+    }
+
+    void addtodoctors() {
+
+        String gender = "";
+        int checked = GenderRadioGroup.getCheckedRadioButtonId();
+        if (checked == -1) {
+            Toast.makeText(SignUpActivity.this, "Select User Type!", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (checked == R.id.radioButtonMale)
+            gender = "Male";
+        else if (checked == R.id.radioButtonFemale)
+            gender = "Female";
+        else if (checked == R.id.radioButtonOthers)
+            gender = "Others";
+
+        final Map<String, Object> user = new HashMap<>();
+        user.put("userType", "doctor");
+        user.put("name", NameTextInput.getText().toString());
+        user.put("age", Integer.parseInt(AgeTextInput.getText().toString()));
+        user.put("speciality", SpecialityTextInput.getText().toString().toLowerCase());
+        user.put("degree", DegreeTextInput.getText().toString().toLowerCase());
+        user.put("gender", gender);
+        user.put("state", StateTextInput.getText().toString().toLowerCase());
+        user.put("city", CityTextInput.getText().toString().toLowerCase());
+        user.put("area", AreaTextInput.getText().toString().toLowerCase());
+        user.put("addressline", AddressLineTextInput.getText().toString().toLowerCase());
+
+        db.collection("doctors").document(phoneno + "d")
                 .set(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

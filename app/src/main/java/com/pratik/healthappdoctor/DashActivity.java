@@ -2,18 +2,34 @@ package com.pratik.healthappdoctor;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.pratik.healthappdoctor.adapters.AppointmentAdapter;
+import com.pratik.healthappdoctor.models.Appointment;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -22,9 +38,21 @@ public class DashActivity extends AppCompatActivity {
     //Firebase Auth
     private FirebaseAuth mAuth;
 
-    TextView DateTextView;
     //Firebase Firestore
     private FirebaseFirestore db;
+
+    TextInputEditText DayTextInput, MonthTextInput, YearTextInput;
+    TextView DateTextView;
+    MaterialButton GetAppointmentButton;
+
+    String doctorid, date2, day, month, year;
+
+    //Recycler
+    AppointmentAdapter madapter;
+    RecyclerView recyclerView;
+    LinearLayoutManager mLayoutManager;
+    ArrayList<Appointment> appointments = new ArrayList<>();
+    private CollectionReference AppointRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,27 +60,50 @@ public class DashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dash);
 
         mAuth = FirebaseAuth.getInstance();
+        doctorid = mAuth.getCurrentUser().getPhoneNumber() + "d";
 
+        DayTextInput = findViewById(R.id.textInputDay);
+        MonthTextInput = findViewById(R.id.textInputMonth);
+        YearTextInput = findViewById(R.id.textInputYear);
         DateTextView = findViewById(R.id.textViewDate);
+
+        GetAppointmentButton = findViewById(R.id.btnGetAppointment);
 
         Date c = Calendar.getInstance().getTime();
         System.out.println("Current time => " + c);
 
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         String formattedDate = df.format(c);
+
         SimpleDateFormat df2 = new SimpleDateFormat("ddMMYYYY");
-        String date2 = df2.format(c);
+        date2 = df2.format(c);
 
         SimpleDateFormat df3 = new SimpleDateFormat("dd");
-        String day = df3.format(c);
+        day = df3.format(c);
 
         SimpleDateFormat df4 = new SimpleDateFormat("MM");
-        String month = df4.format(c);
+        month = df4.format(c);
 
         SimpleDateFormat df5 = new SimpleDateFormat("YYYY");
-        String year = df5.format(c);
+        year = df5.format(c);
 
-        DateTextView.setText(formattedDate + " " + date2 + " " + day + " " + month + " " + year + " " + mAuth.getCurrentUser().getPhoneNumber());
+        DateTextView.setText("Date: " + day + "/" + month + "/" + year);
+        DayTextInput.setText(day);
+        MonthTextInput.setText(month);
+        YearTextInput.setText(year);
+
+        GetAppointmentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                day = DayTextInput.getText().toString();
+                month = MonthTextInput.getText().toString();
+                year = YearTextInput.getText().toString();
+
+                DateTextView.setText("Date: " + day + "/" + month + "/" + year);
+                Toast.makeText(DashActivity.this, "Getting Appointments for " + day + "/" + month + "/" + year, Toast.LENGTH_SHORT).show();
+                getData();
+            }
+        });
 
     }
 
@@ -73,6 +124,33 @@ public class DashActivity extends AppCompatActivity {
         menuInflater.inflate(R.menu.toolbar, menu);
         super.onCreateOptionsMenu(menu);
         return true;
+    }
+
+    void getData() {
+        db.collection("Doctors").document(doctorid).collection(day + month + year)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            int count = 1;
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Appointment appointment = new Appointment(count, document.getId(), document.get("pID").toString());
+                                appointments.add(appointment);
+                                Log.d("Document Fetch", document.getId() + " => " + document.getData());
+                                count++;
+                            }
+                            madapter = new AppointmentAdapter(appointments);
+                            recyclerView.setLayoutManager(mLayoutManager);
+                            recyclerView.setItemAnimator(new DefaultItemAnimator());
+                            recyclerView.setAdapter(madapter);
+                            madapter.notifyDataSetChanged();
+
+                        } else {
+                            Log.d("Document Fetch", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 }
 
