@@ -30,7 +30,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textViewMFGDate"
+                android:id="@+id/textViewAppNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -56,7 +56,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textViewstock"
+                android:id="@+id/textViewPID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"

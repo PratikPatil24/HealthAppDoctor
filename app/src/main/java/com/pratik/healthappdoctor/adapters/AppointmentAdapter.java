@@ -59,9 +59,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         MaterialButton CheckPatientButton;
         MyViewHolder(View view) {
             super(view);
-            AppointmentIDTextView = itemView.findViewById(R.id.textViewMFGDate);
-            PatientIDTextView = itemView.findViewById(R.id.textViewstock);
-            CheckPatientButton = itemView.findViewById(R.id.btnCheckPatient);
+            AppointmentIDTextView = view.findViewById(R.id.textViewAppNo);
+            PatientIDTextView = view.findViewById(R.id.textViewPID);
+            CheckPatientButton = view.findViewById(R.id.btnCheckPatient);
 
             CheckPatientButton.setOnClickListener(new View.OnClickListener() {
                 @Override
