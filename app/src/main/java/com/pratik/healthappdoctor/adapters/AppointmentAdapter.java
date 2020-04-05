@@ -8,12 +8,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
 import com.pratik.healthappdoctor.R;
 import com.pratik.healthappdoctor.models.Appointment;
 
 import java.util.List;
 
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.MyViewHolder> {
+
+    //For Button Click Interface
+    private OnItemClickListener listener;
 
     private List<Appointment> appointments;
 
@@ -40,56 +44,34 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         return appointments.size();
     }
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    // For Button Click
+    public interface OnItemClickListener {
+        void onItemClick(Appointment appointment, int position);
+    }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView AppointmentIDTextView;
         TextView PatientIDTextView;
-
+        MaterialButton CheckPatientButton;
         MyViewHolder(View view) {
             super(view);
             AppointmentIDTextView = itemView.findViewById(R.id.textViewMFGDate);
             PatientIDTextView = itemView.findViewById(R.id.textViewstock);
+            CheckPatientButton = itemView.findViewById(R.id.btnCheckPatient);
+
+            CheckPatientButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(appointments.get(position), position);
+                    }
+                }
+            });
         }
     }
 }
-
-
-//public class StockAdapter extends RecyclerView.Adapter<StockAdapter.MyViewHolder> {
-//
-//    private List<ProductMFG> stocks;
-//
-//    public StockAdapter(List<ProductMFG> stocks) {
-//        this.stocks = stocks;
-//    }
-//
-//    @NonNull
-//    @Override
-//    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        View itemView = LayoutInflater.from(parent.getContext())
-//                .inflate(R.layout.stock_card_layout, parent, false);
-//        return new MyViewHolder(itemView);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(MyViewHolder holder, int position) {
-//        ProductMFG stock = stocks.get(position);
-//        holder.mfg.setText(stock.getDay() + "/" + stock.getMonth() + "/" + stock.getYear());
-//        holder.stock.setText(String.valueOf(stock.getStock()));
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return stocks.size();
-//    }
-//
-//
-//    class MyViewHolder extends RecyclerView.ViewHolder {
-//        TextView mfg;
-//        TextView stock;
-//
-//        MyViewHolder(View view) {
-//            super(view);
-//            mfg = itemView.findViewById(R.id.textViewMFGDate);
-//            stock = itemView.findViewById(R.id.textViewstock);
-//        }
-//    }
-//}

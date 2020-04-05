@@ -16,6 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/selector"
             android:orientation="horizontal">
 
             <TextView
@@ -35,7 +36,7 @@
                 android:layout_margin="8dp"
                 android:layout_weight="5"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="17sp" />
         </LinearLayout>
 
 
@@ -51,7 +52,7 @@
                 android:layout_weight="1"
                 android:text="Patient ID: "
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -65,11 +66,12 @@
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCheckPatient"
             style="@style/SignOutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:text="Check"
+            android:text="Check Patient"
             android:textAllCaps="false" />
 
     </LinearLayout>

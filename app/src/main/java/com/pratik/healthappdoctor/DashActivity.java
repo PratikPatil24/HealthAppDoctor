@@ -60,6 +60,7 @@ public class DashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dash);
 
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         doctorid = mAuth.getCurrentUser().getPhoneNumber() + "d";
 
         DayTextInput = findViewById(R.id.textInputDay);
@@ -68,6 +69,9 @@ public class DashActivity extends AppCompatActivity {
         DateTextView = findViewById(R.id.textViewDate);
 
         GetAppointmentButton = findViewById(R.id.btnGetAppointment);
+
+        recyclerView = findViewById(R.id.recyclerAppointments);
+        mLayoutManager = new LinearLayoutManager(getApplicationContext());
 
         Date c = Calendar.getInstance().getTime();
         System.out.println("Current time => " + c);
@@ -95,12 +99,12 @@ public class DashActivity extends AppCompatActivity {
         GetAppointmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                appointments.clear();
                 day = DayTextInput.getText().toString();
                 month = MonthTextInput.getText().toString();
                 year = YearTextInput.getText().toString();
 
                 DateTextView.setText("Date: " + day + "/" + month + "/" + year);
-                Toast.makeText(DashActivity.this, "Getting Appointments for " + day + "/" + month + "/" + year, Toast.LENGTH_SHORT).show();
                 getData();
             }
         });
@@ -127,7 +131,10 @@ public class DashActivity extends AppCompatActivity {
     }
 
     void getData() {
-        db.collection("Doctors").document(doctorid).collection(day + month + year)
+        Log.d("GetData", "Getting Appointments for " + day + "/" + month + "/" + year + " " + doctorid);
+        Toast.makeText(DashActivity.this, "Getting Appointments for " + day + "/" + month + "/" + year + " " + doctorid, Toast.LENGTH_SHORT).show();
+
+        db.collection("doctors").document(doctorid).collection(day + month + year)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -145,6 +152,17 @@ public class DashActivity extends AppCompatActivity {
                             recyclerView.setItemAnimator(new DefaultItemAnimator());
                             recyclerView.setAdapter(madapter);
                             madapter.notifyDataSetChanged();
+
+                            //For Button Click
+                            madapter.setOnItemClickListener(new AppointmentAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(Appointment appointment, int position) {
+                                    Toast.makeText(DashActivity.this, "Position: " + position + " ID: " + appointment.getID(), Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent(DashActivity.this, AppointmentVerifyActivity.class);
+                                    i.putExtra("ID", appointment.getID());
+                                    startActivity(i);
+                                }
+                            });
 
                         } else {
                             Log.d("Document Fetch", "Error getting documents: ", task.getException());
