@@ -28,7 +28,6 @@
     </style>
 
     <style name="SignButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:layout_margin">8dp</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:padding">8dp</item>
         <item name="cornerRadius">8dp</item>

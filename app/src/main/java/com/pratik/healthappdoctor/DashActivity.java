@@ -8,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -105,6 +105,7 @@ public class DashActivity extends AppCompatActivity {
                 year = YearTextInput.getText().toString();
 
                 DateTextView.setText("Date: " + day + "/" + month + "/" + year);
+                Snackbar.make(v, "Getting Appointments for " + day + "/" + month + "/" + year, Snackbar.LENGTH_SHORT).show();
                 getData();
             }
         });
@@ -132,8 +133,6 @@ public class DashActivity extends AppCompatActivity {
 
     void getData() {
         Log.d("GetData", "Getting Appointments for " + day + "/" + month + "/" + year + " " + doctorid);
-        Toast.makeText(DashActivity.this, "Getting Appointments for " + day + "/" + month + "/" + year + " " + doctorid, Toast.LENGTH_SHORT).show();
-
         db.collection("doctors").document(doctorid).collection(day + month + year)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -159,7 +158,6 @@ public class DashActivity extends AppCompatActivity {
                             madapter.setOnItemClickListener(new AppointmentAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(Appointment appointment, int position) {
-                                    Toast.makeText(DashActivity.this, "Position: " + position + " ID: " + appointment.getID(), Toast.LENGTH_SHORT).show();
                                     Intent i = new Intent(DashActivity.this, AppointmentVerifyActivity.class);
                                     i.putExtra("Appointment", appointment);
                                     startActivity(i);

@@ -25,9 +25,11 @@ public class AppointmentVerifyActivity extends AppCompatActivity {
 
     Patient patient;
     Appointment appointment;
+
     TextView PhoneNumberTextView;
     TextInputEditText OTPTextInput;
     MaterialButton VerifyButton;
+
     String otp;
     //Firebase Auth
     private FirebaseAuth mAuth;

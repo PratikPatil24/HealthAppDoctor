@@ -3,11 +3,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/g"
+    android:orientation="vertical"
     tools:context=".TreatActivity">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnComplete"
+        android:id="@+id/btnDashboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        style="@style/SignOutlinedButton"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:text="Dashboard" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnViewHistory"
+        style="@style/SignButton"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="128dp"
+        android:layout_marginBottom="8dp"
+        android:text="View History"
+        android:textAllCaps="false" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddPrescription"
+        style="@style/SignButton"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:text="Add Prescription"
+        android:textAllCaps="false" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddTreatment"
+        style="@style/SignButton"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:text="Add Treatment"
+        android:textAllCaps="false" />
+
+
 </LinearLayout>

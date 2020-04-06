@@ -14,12 +14,13 @@ import com.pratik.healthappdoctor.models.Patient;
 
 public class TreatActivity extends AppCompatActivity {
 
-    MaterialButton CompleteButton;
     Patient patient;
     //Firebase Auth
     private FirebaseAuth mAuth;
     //Firebase Firestore
     private FirebaseFirestore db;
+
+    MaterialButton DashBoardButton, ViewHistoryButton, AddPrescriptionButton, AddTreatmentButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +35,12 @@ public class TreatActivity extends AppCompatActivity {
 
         Toast.makeText(this, patient.getID() + " " + patient.getName(), Toast.LENGTH_SHORT).show();
 
-        CompleteButton = findViewById(R.id.btnComplete);
+        DashBoardButton = findViewById(R.id.btnDashboard);
+        ViewHistoryButton = findViewById(R.id.btnViewHistory);
+        AddPrescriptionButton = findViewById(R.id.btnAddPrescription);
+        AddTreatmentButton = findViewById(R.id.btnAddTreatment);
 
-        CompleteButton.setOnClickListener(new View.OnClickListener() {
+        DashBoardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(TreatActivity.this, DashActivity.class);
@@ -45,5 +49,28 @@ public class TreatActivity extends AppCompatActivity {
             }
         });
 
+        ViewHistoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(TreatActivity.this, ViewHistoryActivity.class);
+                startActivity(i);
+            }
+        });
+
+        AddPrescriptionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(TreatActivity.this, AddPrescriptionActivity.class);
+                startActivity(i);
+            }
+        });
+
+        AddTreatmentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(TreatActivity.this, AddTreatmentActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }
