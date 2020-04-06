@@ -2,24 +2,34 @@ package com.pratik.healthappdoctor.models;
 
 import java.io.Serializable;
 
-public class Doctor implements Serializable {
-    String phoneno, name, speciality, degree, state, city, area, addressline, gender;
+public class Patient implements Serializable {
+    String ID, phoneno, name, state, city, area, addressline, gender;
+    float weight, height;
     int age;
 
-    public Doctor() {
+    public Patient() {
     }
 
-    public Doctor(String phoneno, String name, String speciality, String degree, String state, String city, String area, String addressline, String gender, int age) {
+    public Patient(String ID, String phoneno, String name, String state, String city, String area, String addressline, String gender, float weight, float height, int age) {
+        this.ID = ID;
         this.phoneno = phoneno;
         this.name = name;
-        this.speciality = speciality;
-        this.degree = degree;
         this.state = state;
         this.city = city;
         this.area = area;
         this.addressline = addressline;
         this.gender = gender;
+        this.weight = weight;
+        this.height = height;
         this.age = age;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getPhoneno() {
@@ -36,22 +46,6 @@ public class Doctor implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getSpeciality() {
-        return speciality;
-    }
-
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
-    }
-
-    public String getDegree() {
-        return degree;
-    }
-
-    public void setDegree(String degree) {
-        this.degree = degree;
     }
 
     public String getState() {
@@ -92,6 +86,22 @@ public class Doctor implements Serializable {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
     }
 
     public int getAge() {

@@ -142,7 +142,9 @@ public class DashActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             int count = 1;
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Appointment appointment = new Appointment(count, document.getId(), document.get("pID").toString());
+                                Appointment appointment = new Appointment(count, document.getId(), document.get("pID").toString(), document.get("dID").toString(),
+                                        document.get("doctorName").toString(), document.get("speciality").toString(), document.get("degree").toString(), document.get("address").toString(),
+                                        document.get("day").toString(), document.get("month").toString(), document.get("year").toString(), document.get("otp").toString());
                                 appointments.add(appointment);
                                 Log.d("Document Fetch", document.getId() + " => " + document.getData());
                                 count++;
@@ -159,7 +161,7 @@ public class DashActivity extends AppCompatActivity {
                                 public void onItemClick(Appointment appointment, int position) {
                                     Toast.makeText(DashActivity.this, "Position: " + position + " ID: " + appointment.getID(), Toast.LENGTH_SHORT).show();
                                     Intent i = new Intent(DashActivity.this, AppointmentVerifyActivity.class);
-                                    i.putExtra("ID", appointment.getID());
+                                    i.putExtra("Appointment", appointment);
                                     startActivity(i);
                                 }
                             });
