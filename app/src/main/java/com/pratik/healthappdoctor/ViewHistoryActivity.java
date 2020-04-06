@@ -1,5 +1,6 @@
 package com.pratik.healthappdoctor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -8,8 +9,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.pratik.healthappdoctor.models.Patient;
 
 public class ViewHistoryActivity extends AppCompatActivity {
+
+    Patient patient;
 
     TabLayout tabLayout;
     TabItem PrescriptionsTab, TreatmentsTab, ReportsTab;
@@ -22,6 +26,9 @@ public class ViewHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_history);
+
+        Intent i = getIntent();
+        patient = (Patient) i.getSerializableExtra("Patient");
 
         tabLayout = findViewById(R.id.tabLayout);
 

@@ -53,6 +53,7 @@ public class TreatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(TreatActivity.this, ViewHistoryActivity.class);
+                i.putExtra("Patient", patient);
                 startActivity(i);
             }
         });
@@ -61,6 +62,7 @@ public class TreatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(TreatActivity.this, AddPrescriptionActivity.class);
+                i.putExtra("Patient", patient);
                 startActivity(i);
             }
         });
@@ -69,6 +71,7 @@ public class TreatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(TreatActivity.this, AddTreatmentActivity.class);
+                i.putExtra("Patient", patient);
                 startActivity(i);
             }
         });
