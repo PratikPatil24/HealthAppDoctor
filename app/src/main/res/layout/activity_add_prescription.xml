@@ -268,7 +268,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="1. Med1\n\t\t7days\n\t\tBreakfast\t\t\tLunch\t\t\tDinner "
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
