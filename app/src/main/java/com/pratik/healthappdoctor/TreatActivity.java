@@ -47,6 +47,7 @@ public class TreatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(TreatActivity.this, DashActivity.class);
+                i.putExtra("Patient", patient);
                 startActivity(i);
                 finish();
             }

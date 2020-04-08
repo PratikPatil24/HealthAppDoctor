@@ -252,11 +252,11 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                         Log.d("Prescription", "DocumentSnapshot data: " + document.getData());
 
                         final Map<String, Object> prescription = new HashMap<>();
-                        prescription.put("doctorid", mAuth.getCurrentUser().getPhoneNumber());
+                        prescription.put("doctorID", mAuth.getCurrentUser().getPhoneNumber());
                         prescription.put("doctorName", document.get("name"));
-                        prescription.put("speciality", document.get("speciality"));
+                        prescription.put("doctorSpeciality", document.get("speciality"));
                         prescription.put("doctorDegree", document.get("degree"));
-                        prescription.put("medcines", Medicines);
+                        prescription.put("medicines", Medicines);
                         prescription.put("type", diagnosis);
                         prescription.put("date", appointment.getDay() + "/" + appointment.getMonth() + "/" + appointment.getYear());
 

@@ -10,10 +10,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.pratik.healthappdoctor.R;
+import com.pratik.healthappdoctor.models.Patient;
 
 public class ReportsFragment extends Fragment {
+
+    Patient patient;
+
     public ReportsFragment() {
         // Required empty public constructor
+    }
+
+    public ReportsFragment(Patient patient) {
+        this.patient = patient;
     }
 
     @Override

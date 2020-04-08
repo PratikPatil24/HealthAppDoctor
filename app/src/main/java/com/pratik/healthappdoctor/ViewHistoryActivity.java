@@ -38,7 +38,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.viewPagerViewHistory);
 
-        historyPageController = new HistoryPageController(getSupportFragmentManager(), tabLayout.getTabCount());
+        historyPageController = new HistoryPageController(getSupportFragmentManager(), tabLayout.getTabCount(), patient);
         viewPager.setAdapter(historyPageController);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
