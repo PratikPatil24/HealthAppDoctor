@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
         GetOTPButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
 
                 phoneno = "+91" + PhoneNumberTextInput.getText().toString().trim();
 
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                DocumentReference docRef = db.collection("users").document(phoneno + "d");
+                DocumentReference docRef = db.collection("doctors").document(phoneno);
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -110,17 +111,20 @@ public class MainActivity extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
                                 Log.d("UserFetch", "DocumentSnapshot data: " + document.getData());
-                                    Toast.makeText(MainActivity.this, "User Found!", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(MainActivity.this, "User Found!", Toast.LENGTH_SHORT).show();
                                     //Getting OTP
-                                    Toast.makeText(MainActivity.this, "Getting OTP...", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(v, "Getting OTP...", Snackbar.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Getting OTP...", Toast.LENGTH_SHORT).show();
+                                sendVerificationCode(phoneno);
                             } else {
                                 Log.d("UserFetch", "No such document");
-                                Toast.makeText(MainActivity.this, "User Not Found!", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(MainActivity.this, "User Not Found!", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(v, "User Not Found!", Snackbar.LENGTH_SHORT).show();
                             }
                         } else {
                             Log.d("UserFetch", "get failed with ", task.getException());
-                            Toast.makeText(MainActivity.this, "Fetch Failed!", Toast.LENGTH_SHORT).show();
-
+                            //Toast.makeText(MainActivity.this, "Fetch Failed!", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(v, "User Fetch Failed!", Snackbar.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -138,7 +142,8 @@ public class MainActivity extends AppCompatActivity {
                     PhoneNumberTextInput.requestFocus();
                     return;
                 }
-                Toast.makeText(MainActivity.this, "Resending OTP...", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Resending OTP...", Toast.LENGTH_SHORT).show();
+                Snackbar.make(v, "Resending OTP...", Snackbar.LENGTH_SHORT).show();
                 resendVerificationCode(phoneno, mResendToken);
             }
         });
@@ -154,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 verifyVerificationCode(otp);
-
             }
         });
 

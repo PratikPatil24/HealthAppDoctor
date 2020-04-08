@@ -185,28 +185,70 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <CheckBox
-                        android:id="@+id/checkBoxBreakfast"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Breakfast" />
+                        android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/checkBoxLunch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Lunch" />
+                        <CheckBox
+                            android:id="@+id/checkBoxBeforeBreakfast"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Before Breakfast" />
 
-                    <CheckBox
-                        android:id="@+id/checkBoxDinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        <CheckBox
+                            android:id="@+id/checkBoxAfterBreakfast"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="After Breakfast" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Dinner" />
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/checkBoxBeforeLunch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Before Lunch" />
+
+                        <CheckBox
+                            android:id="@+id/checkBoxAfterLunch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="After Lunch" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/checkBoxBeforeDinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Before Dinner" />
+
+                        <CheckBox
+                            android:id="@+id/checkBoxAfterDinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="After Dinner" />
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -219,15 +261,17 @@
                     android:textAllCaps="false" />
 
             </LinearLayout>
-
-
         </com.google.android.material.card.MaterialCardView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerMedicine"
+        <TextView
+            android:id="@+id/textViewMedicine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_margin="8dp"
+            android:text="1. Med1\n\t\t7days\n\t\tBreakfast\t\t\tLunch\t\t\tDinner "
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAddPrescription"

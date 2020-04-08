@@ -15,12 +15,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.pratik.healthappdoctor.models.Doctor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextInputEditText StateTextInput, CityTextInput, AreaTextInput, AddressLineTextInput;
     MaterialButton UpdateInfoButton, SignOutButton;
     String phoneno, gender;
+
     //Firebase Auth
     private FirebaseAuth mAuth;
     //Firebase Firestore
@@ -63,9 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
         UpdateInfoButton = findViewById(R.id.btnUpdateInfo);
         SignOutButton = findViewById(R.id.btnSignOut);
 
-        final Doctor doctor = new Doctor();
-
-        final DocumentReference docRef = db.collection("users").document(mAuth.getCurrentUser().getPhoneNumber() + "d");
+        final DocumentReference docRef = db.collection("doctors").document(mAuth.getCurrentUser().getPhoneNumber());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -73,16 +72,6 @@ public class ProfileActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Log.d("DoctorProfile", "DocumentSnapshot data: " + document.getData());
-//                        doctor.setPhoneno(mAuth.getCurrentUser().getPhoneNumber());
-//                        doctor.setName(document.get("name").toString());
-//                        doctor.setSpeciality(document.get("speciality").toString());
-//                        doctor.setDegree(document.get("degree").toString());
-//                        doctor.setAge(Integer.parseInt(document.get("age").toString()));
-//                        doctor.setState(document.get("state").toString());
-//                        doctor.setCity(document.get("city").toString());
-//                        doctor.setArea(document.get("area").toString());
-//                        doctor.setAddressline(document.get("addressline").toString());
-
                         PhoneNumberTextView.setText(mAuth.getCurrentUser().getPhoneNumber());
                         NameTextInput.setText(document.get("name").toString());
                         SpecialityTextInput.setText(document.get("speciality").toString());
@@ -96,6 +85,7 @@ public class ProfileActivity extends AppCompatActivity {
                         gender = document.get("gender").toString();
                     } else {
                         Log.d("DoctorProfile", "No such document");
+                        Toast.makeText(ProfileActivity.this, "Doctor Not Found!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Log.d("DoctorProfile", "get failed with ", task.getException());
@@ -105,7 +95,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         UpdateInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 phoneno = mAuth.getCurrentUser().getPhoneNumber();
 //                int checked = GenderRadioGroup.getCheckedRadioButtonId();
 //                if (checked == -1) {
@@ -130,13 +120,14 @@ public class ProfileActivity extends AppCompatActivity {
                 user.put("area", AreaTextInput.getText().toString().toLowerCase());
                 user.put("addressline", AddressLineTextInput.getText().toString().toLowerCase());
 
-                db.collection("users").document(phoneno + "d")
+                db.collection("doctors").document(phoneno)
                         .set(user)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d("UserAdd", "DocumentSnapshot successfully written!");
-                                Toast.makeText(ProfileActivity.this, "Information Updated!", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(ProfileActivity.this, "Information Updated!", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(v, "Information Updated!", Snackbar.LENGTH_SHORT).show();
                                 finish();
                             }
                         })
@@ -144,7 +135,8 @@ public class ProfileActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Log.w("UserAdd", "Error writing document", e);
-                                Toast.makeText(ProfileActivity.this, "Information Not Updated!", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(ProfileActivity.this, "Information Not Updated!", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(v, "Information Not Updated!", Snackbar.LENGTH_SHORT).show();
                             }
                         });
             }

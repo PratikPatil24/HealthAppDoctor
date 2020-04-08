@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
@@ -113,7 +114,7 @@ public class SignUpActivity extends AppCompatActivity {
         GenderRadioGroup = findViewById(R.id.radioGroupGender);
         GetOTPButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
 
                 phoneno = "+91" + PhoneNumberTextInput.getText().toString().trim();
 
@@ -124,7 +125,7 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 
-                DocumentReference docRef = db.collection("users").document(phoneno + "d");
+                DocumentReference docRef = db.collection("doctors").document(phoneno);
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -132,13 +133,13 @@ public class SignUpActivity extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
                                 Log.d("UserFetch", "DocumentSnapshot data: " + document.getData());
-                                Toast.makeText(SignUpActivity.this, "User Found!", Toast.LENGTH_SHORT).show();
-
+                                //Toast.makeText(SignUpActivity.this, "User Found!", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(v, "User Found! Please Sign In", Snackbar.LENGTH_SHORT).show();
                             } else {
                                 Log.d("UserFetch", "No such document");
 
                                 //Checking If Not Chemist
-                                DocumentReference docRef = db.collection("users").document(phoneno + "c");
+                                DocumentReference docRef = db.collection("chemists").document(phoneno);
                                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -146,28 +147,27 @@ public class SignUpActivity extends AppCompatActivity {
                                             DocumentSnapshot document = task.getResult();
                                             if (document.exists()) {
                                                 Log.d("UserFetch", "DocumentSnapshot data: " + document.getData());
-                                                Toast.makeText(SignUpActivity.this, "Chemist User Found! Cannot Sign Up as Doctor", Toast.LENGTH_SHORT).show();
-
+                                                //Toast.makeText(SignUpActivity.this, "Chemist User Found! Cannot Sign Up as Doctor", Toast.LENGTH_SHORT).show();
+                                                Snackbar.make(v, "Chemist User Found! Cannot Sign Up as Doctor", Snackbar.LENGTH_SHORT).show();
                                             } else {
                                                 Log.d("UserFetch", "No such document");
-                                                Toast.makeText(SignUpActivity.this, "User Not Found!", Toast.LENGTH_SHORT).show();
+                                                //Toast.makeText(SignUpActivity.this, "User Not Found!", Toast.LENGTH_SHORT).show();
                                                 //Getting OTP
-                                                Toast.makeText(SignUpActivity.this, "Getting OTP...", Toast.LENGTH_SHORT).show();
+                                                Snackbar.make(v, "Getting OTP...", Snackbar.LENGTH_SHORT).show();
+                                                //Toast.makeText(SignUpActivity.this, "Getting OTP...", Toast.LENGTH_SHORT).show();
                                                 sendVerificationCode(phoneno);
                                             }
                                         } else {
                                             Log.d("UserFetch", "get failed with ", task.getException());
-                                            Toast.makeText(SignUpActivity.this, "Fetch Failed!", Toast.LENGTH_SHORT).show();
-
+                                            //Toast.makeText(SignUpActivity.this, "Fetch Failed!", Toast.LENGTH_SHORT).show();
+                                            Snackbar.make(v, "User Fetch Failed!", Snackbar.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
-
                             }
                         } else {
                             Log.d("UserFetch", "get failed with ", task.getException());
                             Toast.makeText(SignUpActivity.this, "Fetch Failed!", Toast.LENGTH_SHORT).show();
-
                         }
                     }
                 });
@@ -244,7 +244,7 @@ public class SignUpActivity extends AppCompatActivity {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
         Toast.makeText(this, "Credential: " + credential.toString(), Toast.LENGTH_SHORT).show();
         //adding user
-        addUser();
+//        addUser();
         addtodoctors();
 
         //signing the user
@@ -299,22 +299,22 @@ public class SignUpActivity extends AppCompatActivity {
         user.put("area", AreaTextInput.getText().toString().toLowerCase());
         user.put("addressline", AddressLineTextInput.getText().toString().toLowerCase());
 
-        db.collection("users").document(phoneno + "d")
-                .set(user)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("UserAdd", "DocumentSnapshot successfully written!");
-                        Toast.makeText(SignUpActivity.this, "User Added!", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("UserAdd", "Error writing document", e);
-                        Toast.makeText(SignUpActivity.this, "User Not Added!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+//        db.collection("users").document(phoneno)
+//                .set(user)
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        Log.d("UserAdd", "DocumentSnapshot successfully written!");
+//                        Toast.makeText(SignUpActivity.this, "User Added!", Toast.LENGTH_SHORT).show();
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w("UserAdd", "Error writing document", e);
+//                        Toast.makeText(SignUpActivity.this, "User Not Added!", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
 
 
     }
@@ -345,7 +345,7 @@ public class SignUpActivity extends AppCompatActivity {
         user.put("area", AreaTextInput.getText().toString().toLowerCase());
         user.put("addressline", AddressLineTextInput.getText().toString().toLowerCase());
 
-        db.collection("doctors").document(phoneno + "d")
+        db.collection("doctors").document(phoneno)
                 .set(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
