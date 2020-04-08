@@ -113,18 +113,15 @@ public class MainActivity extends AppCompatActivity {
                                 Log.d("UserFetch", "DocumentSnapshot data: " + document.getData());
                                 //Toast.makeText(MainActivity.this, "User Found!", Toast.LENGTH_SHORT).show();
                                     //Getting OTP
-                                Snackbar.make(v, "Getting OTP...", Snackbar.LENGTH_SHORT).show();
                                 Toast.makeText(MainActivity.this, "Getting OTP...", Toast.LENGTH_SHORT).show();
                                 sendVerificationCode(phoneno);
                             } else {
                                 Log.d("UserFetch", "No such document");
-                                //Toast.makeText(MainActivity.this, "User Not Found!", Toast.LENGTH_SHORT).show();
-                                Snackbar.make(v, "User Not Found!", Snackbar.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "User Not Found!", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             Log.d("UserFetch", "get failed with ", task.getException());
-                            //Toast.makeText(MainActivity.this, "Fetch Failed!", Toast.LENGTH_SHORT).show();
-                            Snackbar.make(v, "User Fetch Failed!", Snackbar.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Fetch Failed!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

@@ -5,11 +5,13 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.pratik.healthappdoctor.models.Appointment;
 import com.pratik.healthappdoctor.models.Patient;
 
 public class AddTreatmentActivity extends AppCompatActivity {
 
     Patient patient;
+    Appointment appointment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,5 +20,7 @@ public class AddTreatmentActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         patient = (Patient) i.getSerializableExtra("Patient");
+        appointment = (Appointment) i.getSerializableExtra("Appointment");
+
     }
 }

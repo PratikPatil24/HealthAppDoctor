@@ -10,11 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.pratik.healthappdoctor.models.Appointment;
 import com.pratik.healthappdoctor.models.Patient;
 
 public class TreatActivity extends AppCompatActivity {
 
     Patient patient;
+    Appointment appointment;
     //Firebase Auth
     private FirebaseAuth mAuth;
     //Firebase Firestore
@@ -32,6 +34,7 @@ public class TreatActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         patient = (Patient) i.getSerializableExtra("Patient");
+        appointment = (Appointment) i.getSerializableExtra("Appointment");
 
         Toast.makeText(this, patient.getID() + " " + patient.getName(), Toast.LENGTH_SHORT).show();
 
@@ -63,6 +66,7 @@ public class TreatActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(TreatActivity.this, AddPrescriptionActivity.class);
                 i.putExtra("Patient", patient);
+                i.putExtra("Appointment", appointment);
                 startActivity(i);
             }
         });
@@ -72,6 +76,7 @@ public class TreatActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(TreatActivity.this, AddTreatmentActivity.class);
                 i.putExtra("Patient", patient);
+                i.putExtra("Appointment", appointment);
                 startActivity(i);
             }
         });

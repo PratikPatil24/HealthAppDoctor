@@ -84,6 +84,7 @@ public class AppointmentVerifyActivity extends AppCompatActivity {
                                 if (otp.equals(appointment.getOtp())) {
                                     Intent i = new Intent(AppointmentVerifyActivity.this, TreatActivity.class);
                                     i.putExtra("Patient", patient);
+                                    i.putExtra("Appointment", appointment);
                                     startActivity(i);
                                     finish();
                                 } else {

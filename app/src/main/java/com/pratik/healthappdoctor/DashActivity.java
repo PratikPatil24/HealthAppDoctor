@@ -61,7 +61,7 @@ public class DashActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        doctorid = mAuth.getCurrentUser().getPhoneNumber() + "d";
+        doctorid = mAuth.getCurrentUser().getPhoneNumber();
 
         DayTextInput = findViewById(R.id.textInputDay);
         MonthTextInput = findViewById(R.id.textInputMonth);
