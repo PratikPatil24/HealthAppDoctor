@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.pratik.healthappdoctor.models.Appointment;
 import com.pratik.healthappdoctor.models.Patient;
+import com.pratik.healthappdoctor.models.Prescription;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +40,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
     TextView NameTextView, AgeTextView, GenderTextView, WeightTextView, HeightTextView, MedicineTextView;
     TextInputEditText MedNameTextInput, DaysTextInput;
-    MaterialButton AddMedicineButton, AddPrescriptionButton;
+    MaterialButton AddMedicineButton, AddPrescriptionButton, ProceedButton;
 
     CheckBox BBreakfastCheckBox, ABreakfastCheckBox, BLunchCheckBox, ALunchCheckBox, BDinnerCheckBox, ADinnerCheckBox;
     int A = 0, B = 0, Others = 0;
@@ -51,6 +52,8 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     //Firebase Firestore
     private FirebaseFirestore db;
 
+    int flag = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +62,6 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         Intent i = getIntent();
         patient = (Patient) i.getSerializableExtra("Patient");
         appointment = (Appointment) i.getSerializableExtra("Appointment");
-
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -90,6 +92,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         DiagnosisRadioGroup = findViewById(R.id.radioGroupDiagnosis);
 
         AddPrescriptionButton = findViewById(R.id.btnAddPrescription);
+        ProceedButton = findViewById(R.id.btnProceed);
 
         NameTextView.setText(patient.getName());
         AgeTextView.setText(String.valueOf(patient.getAge()));
@@ -150,8 +153,43 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                 addPrescription();
                 deletePApp();
                 deleteDApp();
-                Intent i = new Intent(AddPrescriptionActivity.this, TreatActivity.class);
+//                Intent i = new Intent(AddPrescriptionActivity.this, TreatActivity.class);
+//                i.putExtra("Patient", patient);
+//                startActivity(i);
+//                finish();
+            }
+        });
+
+        ProceedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (flag == 0) {
+                    addDiagnosisStats();
+                    addPrescription();
+                    deletePApp();
+                    deleteDApp();
+                }
+                int checked = DiagnosisRadioGroup.getCheckedRadioButtonId();
+                if (checked == -1) {
+                    Toast.makeText(AddPrescriptionActivity.this, "Select User Type!", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (checked == R.id.radioButtonA) {
+                    diagnosis = "A";
+                    A++;
+                } else if (checked == R.id.radioButtonB) {
+                    diagnosis = "B";
+                    B++;
+                } else if (checked == R.id.radioButtonOthers) {
+                    diagnosis = "Others";
+                    Others++;
+                }
+
+                Prescription prescription = new Prescription("id", appointment.getdID(), appointment.getDoctorName(), appointment.getSpeciality(), appointment.getDegree(),
+                        appointment.getDay() + "/" + appointment.getMonth() + "/" + appointment.getYear(), diagnosis, Medicines);
+                Intent i = new Intent(AddPrescriptionActivity.this, ChemistActivity.class);
                 i.putExtra("Patient", patient);
+                i.putExtra("Prescription", prescription);
+                i.putExtra("Appointment", appointment);
                 startActivity(i);
                 finish();
             }
@@ -269,6 +307,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                                     public void onSuccess(Void aVoid) {
                                         Log.d("Prescription", "DocumentSnapshot successfully written!");
                                         Toast.makeText(AddPrescriptionActivity.this, "Prescription Added!", Toast.LENGTH_SHORT).show();
+                                        flag = 1;
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {

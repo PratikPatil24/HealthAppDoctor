@@ -311,11 +311,20 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAddPrescription"
-            style="@style/SignButton"
+            style="@style/SignOutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:text="Add Prescription"
+            android:textAllCaps="false" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnProceed"
+            style="@style/SignButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="Proceed"
             android:textAllCaps="false" />
     </LinearLayout>
 
