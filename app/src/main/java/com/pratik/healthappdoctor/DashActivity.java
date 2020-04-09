@@ -43,7 +43,7 @@ public class DashActivity extends AppCompatActivity {
 
     TextInputEditText DayTextInput, MonthTextInput, YearTextInput;
     TextView DateTextView;
-    MaterialButton GetAppointmentButton;
+    MaterialButton ViewStatsButton, GetAppointmentButton;
 
     String doctorid, date2, day, month, year;
 
@@ -68,6 +68,7 @@ public class DashActivity extends AppCompatActivity {
         YearTextInput = findViewById(R.id.textInputYear);
         DateTextView = findViewById(R.id.textViewDate);
 
+        ViewStatsButton = findViewById(R.id.btnViewStats);
         GetAppointmentButton = findViewById(R.id.btnGetAppointment);
 
         recyclerView = findViewById(R.id.recyclerAppointments);
@@ -96,6 +97,13 @@ public class DashActivity extends AppCompatActivity {
         MonthTextInput.setText(month);
         YearTextInput.setText(year);
 
+        ViewStatsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(DashActivity.this, StatisticsActivity.class);
+                startActivity(i);
+            }
+        });
         GetAppointmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
