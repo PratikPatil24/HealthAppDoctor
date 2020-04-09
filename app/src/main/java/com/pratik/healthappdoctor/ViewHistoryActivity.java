@@ -2,7 +2,6 @@ package com.pratik.healthappdoctor;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -16,7 +15,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
     Patient patient;
 
     TabLayout tabLayout;
-    TabItem PrescriptionsTab, TreatmentsTab, ReportsTab;
+    TabItem PrescriptionsTab, TreatmentsTab;
 
     ViewPager viewPager;
 
@@ -34,7 +33,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
 
         PrescriptionsTab = findViewById(R.id.tabPrescriptions);
         TreatmentsTab = findViewById(R.id.tabTreatments);
-        ReportsTab = findViewById(R.id.tabReports);
+//        ReportsTab = findViewById(R.id.tabReports);
 
         viewPager = findViewById(R.id.viewPagerViewHistory);
 
@@ -47,7 +46,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                Toast.makeText(ViewHistoryActivity.this, tab.getPosition() + " " + "Changing", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ViewHistoryActivity.this, tab.getPosition() + " " + "Changing", Toast.LENGTH_SHORT).show();
             }
 
             @Override

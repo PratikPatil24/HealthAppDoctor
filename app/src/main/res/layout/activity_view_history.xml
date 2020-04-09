@@ -26,11 +26,11 @@
             android:layout_height="match_parent"
             android:text="Treatments" />
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabReports"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Reports" />
+        <!--        <com.google.android.material.tabs.TabItem-->
+        <!--            android:id="@+id/tabReports"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:text="Reports" />-->
 
     </com.google.android.material.tabs.TabLayout>
 
