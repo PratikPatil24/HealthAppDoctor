@@ -291,16 +291,52 @@
             android:layout_margin="8dp">
 
             <RadioButton
-                android:id="@+id/radioButtonA"
+                android:id="@+id/radioButtonRespiratory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="A" />
+                android:text="Respiratory" />
 
             <RadioButton
-                android:id="@+id/radioButtonB"
+                android:id="@+id/radioButtonNeurological"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="B" />
+                android:text="Neurological" />
+
+            <RadioButton
+                android:id="@+id/radioButtonInfectious"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Infectious" />
+
+            <RadioButton
+                android:id="@+id/radioButtonCardiac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cardiac" />
+
+            <RadioButton
+                android:id="@+id/radioButtonDermatological"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dermatological" />
+
+            <RadioButton
+                android:id="@+id/radioButtonUrological"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Urological" />
+
+            <RadioButton
+                android:id="@+id/radioButtonGeneralSurgical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="General Surgical" />
+
+            <RadioButton
+                android:id="@+id/radioButtonGastroenterological"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Urological" />
 
             <RadioButton
                 android:id="@+id/radioButtonOthers"

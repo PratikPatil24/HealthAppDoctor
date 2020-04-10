@@ -21,7 +21,9 @@ public class StatisticsActivity extends AppCompatActivity {
     TextInputEditText AreaTextInput, MonthTextInput, YearTextInput;
     TextView StatisticsTextView;
     MaterialButton GetStatisticsButton;
-    String A, B, Others;
+    String Respiratory, Neurological, Infectious, Cardiac, Dermatological, Urological, GeneralSurgical, Gastroenterological, Others;
+
+
     //Firebase Firestore
     private FirebaseFirestore db;
 
@@ -70,10 +72,26 @@ public class StatisticsActivity extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
                                 Log.d("Statistics", "DocumentSnapshot data: " + document.getData());
-                                A = document.get("A").toString();
-                                B = document.get("B").toString();
+                                Respiratory = document.get("Respiratory").toString();
+                                Neurological = document.get("Neurological").toString();
+                                Infectious = document.get("Infectious").toString();
+                                Cardiac = document.get("Cardiac").toString();
+                                Dermatological = document.get("Dermatological").toString();
+                                Urological = document.get("Urological").toString();
+                                GeneralSurgical = document.get("GeneralSurgical").toString();
+                                Gastroenterological = document.get("Gastroenterological").toString();
                                 Others = document.get("Others").toString();
-                                String stats = "Statistics:\n\tA: " + A + "\n\tB: " + B + "\n\tOthers: " + Others;
+
+                                String stats = "Statistics:" +
+                                        "\n\tRespiratory: " + Respiratory +
+                                        "\n\tNeurological: " + Neurological +
+                                        "\n\tInfectious: " + Infectious +
+                                        "\n\tCardiac: " + Cardiac +
+                                        "\n\tDermatological: " + Dermatological +
+                                        "\n\tUrological: " + Urological +
+                                        "\n\tGeneralSurgical: " + GeneralSurgical +
+                                        "\n\tGastroenterological: " + Gastroenterological +
+                                        "\n\tOthers: " + Others;
                                 StatisticsTextView.setText(stats);
                             } else {
                                 Log.d("Statistics", "No such document");

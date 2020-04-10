@@ -148,6 +148,8 @@ public class ChemistActivity extends AppCompatActivity {
                         Log.d("Prescription", "DocumentSnapshot data: " + document.getData());
 
                         final Map<String, Object> order = new HashMap<>();
+                        order.put("chemistID", chemist.getId());
+                        order.put("patientID", patient.getID());
                         order.put("doctorID", mAuth.getCurrentUser().getPhoneNumber());
                         order.put("doctorName", document.get("name"));
                         order.put("doctorSpeciality", document.get("speciality"));
@@ -209,6 +211,8 @@ public class ChemistActivity extends AppCompatActivity {
                         Log.d("Prescription", "DocumentSnapshot data: " + document.getData());
 
                         final Map<String, Object> order = new HashMap<>();
+                        order.put("chemistID", chemist.getId());
+                        order.put("patientID", patient.getID());
                         order.put("doctorID", mAuth.getCurrentUser().getPhoneNumber());
                         order.put("doctorName", document.get("name"));
                         order.put("doctorSpeciality", document.get("speciality"));

@@ -43,7 +43,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     MaterialButton AddMedicineButton, AddPrescriptionButton, ProceedButton;
 
     CheckBox BBreakfastCheckBox, ABreakfastCheckBox, BLunchCheckBox, ALunchCheckBox, BDinnerCheckBox, ADinnerCheckBox;
-    int A = 0, B = 0, Others = 0;
+    int Respiratory = 0, Neurological = 0, Infectious = 0, Cardiac = 0, Dermatological = 0, Urological = 0, GeneralSurgical = 0, Gastroenterological = 0, Others = 0;
 
     String Medicines;
     int count = 0;
@@ -169,20 +169,6 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                     deletePApp();
                     deleteDApp();
                 }
-                int checked = DiagnosisRadioGroup.getCheckedRadioButtonId();
-                if (checked == -1) {
-                    Toast.makeText(AddPrescriptionActivity.this, "Select User Type!", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (checked == R.id.radioButtonA) {
-                    diagnosis = "A";
-                    A++;
-                } else if (checked == R.id.radioButtonB) {
-                    diagnosis = "B";
-                    B++;
-                } else if (checked == R.id.radioButtonOthers) {
-                    diagnosis = "Others";
-                    Others++;
-                }
 
                 Prescription prescription = new Prescription("id", appointment.getdID(), appointment.getDoctorName(), appointment.getSpeciality(), appointment.getDegree(),
                         appointment.getDay() + "/" + appointment.getMonth() + "/" + appointment.getYear(), diagnosis, Medicines);
@@ -199,18 +185,36 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     void addDiagnosisStats() {
         int checked = DiagnosisRadioGroup.getCheckedRadioButtonId();
         if (checked == -1) {
-            Toast.makeText(AddPrescriptionActivity.this, "Select User Type!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddPrescriptionActivity.this, "Select Diagnosis Type!", Toast.LENGTH_SHORT).show();
             return;
-        } else if (checked == R.id.radioButtonA) {
-            diagnosis = "A";
-            A++;
-        } else if (checked == R.id.radioButtonB) {
-            diagnosis = "B";
-            B++;
-        } else if (checked == R.id.radioButtonOthers) {
+        } else if (checked == R.id.radioButtonRespiratory) {
+            diagnosis = "Respiratory";
+            Respiratory++;
+        } else if (checked == R.id.radioButtonNeurological) {
+            diagnosis = "Neurological";
+            Neurological++;
+        } else if (checked == R.id.radioButtonNeurological) {
+            diagnosis = "Infectious";
+            Infectious++;
+        } else if (checked == R.id.radioButtonCardiac) {
+            diagnosis = "Cardiac";
+            Cardiac++;
+        } else if (checked == R.id.radioButtonDermatological) {
+            diagnosis = "Dermatological";
+            Dermatological++;
+        } else if (checked == R.id.radioButtonUrological) {
+            diagnosis = "Urological";
+            Urological++;
+        } else if (checked == R.id.radioButtonGeneralSurgical) {
+            diagnosis = "General Surgical";
+            GeneralSurgical++;
+        } else if (checked == R.id.radioButtonGastroenterological) {
+            diagnosis = "Gastroenterological";
+            Gastroenterological++;
+        } else if (checked == R.id.radioButtonInfectious) {
             diagnosis = "Others";
-            Others++;
         }
+
 
         db.collection("statistics").document(appointment.getMonth() + appointment.getYear() + patient.getArea())
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -239,8 +243,14 @@ public class AddPrescriptionActivity extends AppCompatActivity {
 
                         //Adding Document
                         final Map<String, Object> statistics = new HashMap<>();
-                        statistics.put("A", A);
-                        statistics.put("B", B);
+                        statistics.put("Respiratory", Respiratory);
+                        statistics.put("Neurological", Neurological);
+                        statistics.put("Infectious", Infectious);
+                        statistics.put("Cardiac", Cardiac);
+                        statistics.put("Dermatological", Dermatological);
+                        statistics.put("Urological", Urological);
+                        statistics.put("GeneralSurgical", GeneralSurgical);
+                        statistics.put("Gastroenterological", Gastroenterological);
                         statistics.put("Others", Others);
 
                         db.collection("statistics").document(appointment.getMonth() + appointment.getYear() + patient.getArea())
@@ -268,17 +278,6 @@ public class AddPrescriptionActivity extends AppCompatActivity {
     }
 
     void addPrescription() {
-
-        int checked = DiagnosisRadioGroup.getCheckedRadioButtonId();
-        if (checked == -1) {
-            Toast.makeText(AddPrescriptionActivity.this, "Select User Type!", Toast.LENGTH_SHORT).show();
-            return;
-        } else if (checked == R.id.radioButtonA)
-            diagnosis = "A";
-        else if (checked == R.id.radioButtonB)
-            diagnosis = "B";
-        else if (checked == R.id.radioButtonOthers)
-            diagnosis = "Others";
 
         final DocumentReference docRef = db.collection("doctors").document(mAuth.getCurrentUser().getPhoneNumber());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
